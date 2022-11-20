@@ -1,0 +1,19 @@
+{
+  "name": "hellooo-commons",
+  "version": "1.0.0",
+  "description": "common nodejs codes for hellooo-stack",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/hellooo-stack/hellooo-commons-nodejs.git"
+  },
+  "author": "https://github.com/Alpha2J",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/hellooo-stack/hellooo-commons-nodejs/issues"
+  },
+  "homepage": "https://github.com/hellooo-stack/hellooo-commons-nodejs#readme"
+}
