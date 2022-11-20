@@ -1,5 +1,7 @@
 module.exports = {
     fileUtils: require('./fileUtils'),
     cryptoUtils: require('./cryptoUtils'),
-    dateUtils: require('./dateUtils')
+    dateUtils: require('./dateUtils'),
+    randomUtils: require('./randomUtils'),
+    timingUtils: require('./timingUtils')
 }

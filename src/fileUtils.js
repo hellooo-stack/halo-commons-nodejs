@@ -1,5 +1,6 @@
 const fs = require('fs');
 const path = require('path');
+const os = require('os');
 
 /**
  *
@@ -41,9 +42,19 @@ function normalizePath(filePath) {
     return path.normalize(filePath);
 }
 
+/**
+ * 运行当前程序的用户的家目录
+ *
+ * @returns {string}
+ */
+function homedirPath() {
+    return normalizePath(os.homedir());
+}
+
 module.exports = {
     writeFileAsync: writeFileAsync,
     appendFileAsync: appendFileAsync,
-    normalizePath: normalizePath
+    normalizePath: normalizePath,
+    homedirPath: homedirPath
 }
 

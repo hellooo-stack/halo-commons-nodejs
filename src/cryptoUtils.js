@@ -19,4 +19,4 @@ function md5(content) {
 
 module.exports = {
     md5: md5
-}
+};
