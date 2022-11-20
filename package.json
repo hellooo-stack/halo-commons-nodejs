@@ -1,5 +1,5 @@
 {
-  "name": "hellooo-commons",
+  "name": "@hellooo-stack/hellooo-commons",
   "version": "1.0.0",
   "description": "common nodejs codes for hellooo-stack",
   "main": "src/index.js",
