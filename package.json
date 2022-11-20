@@ -15,5 +15,8 @@
   "bugs": {
     "url": "https://github.com/hellooo-stack/hellooo-commons-nodejs/issues"
   },
-  "homepage": "https://github.com/hellooo-stack/hellooo-commons-nodejs#readme"
+  "homepage": "https://github.com/hellooo-stack/hellooo-commons-nodejs#readme",
+  "dependencies": {
+    "moment": "^2.29.4"
+  }
 }
