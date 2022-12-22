@@ -17,6 +17,11 @@
   },
   "homepage": "https://github.com/hellooo-stack/hellooo-commons-nodejs#readme",
   "dependencies": {
-    "moment": "^2.29.4"
+    "axios": "^1.2.1",
+    "moment": "^2.29.4",
+    "mongodb": "^4.13.0",
+    "mysql": "^2.18.1",
+    "redis": "^4.5.1",
+    "xlsx": "^0.18.5"
   }
 }
