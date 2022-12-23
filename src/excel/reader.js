@@ -8,9 +8,7 @@ const _ = require('lodash');
  * @param sheetIndex default to 0
  * @returns {unknown[]|*[]} array containing the rows, each row is an array: [['col1 of row1', 'col2 of row1'], ['col1 of row2', 'col2 of row2']]
  */
-function rowsFromExcel(filePath, sheetIndex) {
-
-    sheetIndex = sheetIndex ? sheetIndex : 0;
+function rowsFromExcel(filePath, sheetIndex = 0) {
 
 //    读取Excel文件
     const workbook = XLSX.readFile(filePath);
@@ -33,10 +31,9 @@ function rowsFromExcel(filePath, sheetIndex) {
  * @param sheetIndex default to 0
  * @returns {string[]|*[]} array containing the headers
  */
-function headersFromExcel(filePath, sheetIndex) {
-    sheetIndex = sheetIndex ? sheetIndex : 0;
+function headersFromExcel(filePath, sheetIndex = 0) {
 
-    const parsedRows = rows(filePath, sheetIndex);
+    const parsedRows = rowsFromExcel(filePath, sheetIndex);
     if (_.isEmpty(parsedRows)) {
         return [];
     }
@@ -44,10 +41,9 @@ function headersFromExcel(filePath, sheetIndex) {
     return parsedRows[0];
 }
 
-function contentsFromExcel(filePath, sheetIndex) {
-    sheetIndex = sheetIndex ? sheetIndex : 0;
+function contentsFromExcel(filePath, sheetIndex = 0) {
 
-    const parsedRows = rows(filePath, sheetIndex);
+    const parsedRows = rowsFromExcel(filePath, sheetIndex);
 //    the first row is header,
     if (_.size(parsedRows) <= 1) {
         return [];
@@ -56,9 +52,7 @@ function contentsFromExcel(filePath, sheetIndex) {
     return _.takeRight(parsedRows, parsedRows.length - 1);
 }
 
-function contentsAsJSONFromExcel(filePath, sheetIndex) {
-
-    sheetIndex = sheetIndex ? sheetIndex : 0;
+function contentsAsJSONFromExcel(filePath, sheetIndex = 0) {
 
     const workbook = XLSX.readFile(filePath);
     const sheet = workbook.Sheets[workbook.SheetNames[sheetIndex]];
