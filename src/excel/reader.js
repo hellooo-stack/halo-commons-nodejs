@@ -8,7 +8,7 @@ const _ = require('lodash');
  * @param sheetIndex default to 0
  * @returns {unknown[]|*[]} array containing the rows, each row is an array: [['col1 of row1', 'col2 of row1'], ['col1 of row2', 'col2 of row2']]
  */
-function rows(filePath, sheetIndex) {
+function rowsFromExcel(filePath, sheetIndex) {
 
     sheetIndex = sheetIndex ? sheetIndex : 0;
 
@@ -33,7 +33,7 @@ function rows(filePath, sheetIndex) {
  * @param sheetIndex default to 0
  * @returns {string[]|*[]} array containing the headers
  */
-function headers(filePath, sheetIndex) {
+function headersFromExcel(filePath, sheetIndex) {
     sheetIndex = sheetIndex ? sheetIndex : 0;
 
     const parsedRows = rows(filePath, sheetIndex);
@@ -44,7 +44,7 @@ function headers(filePath, sheetIndex) {
     return parsedRows[0];
 }
 
-function contents(filePath, sheetIndex) {
+function contentsFromExcel(filePath, sheetIndex) {
     sheetIndex = sheetIndex ? sheetIndex : 0;
 
     const parsedRows = rows(filePath, sheetIndex);
@@ -56,7 +56,7 @@ function contents(filePath, sheetIndex) {
     return _.takeRight(parsedRows, parsedRows.length - 1);
 }
 
-function contentsAsJSON(filePath, sheetIndex) {
+function contentsAsJSONFromExcel(filePath, sheetIndex) {
 
     sheetIndex = sheetIndex ? sheetIndex : 0;
 
@@ -74,4 +74,11 @@ function contentsAsJSON(filePath, sheetIndex) {
     return rowsAsJSON;
 }
 
+const reader = {
+    rowsFromExcel,
+    headersFromExcel,
+    contentsFromExcel,
+    contentsAsJSONFromExcel
+}
 
+module.exports = reader;
