@@ -1,20 +1,13 @@
 const XLSX = require('xlsx');
 const _ = require('lodash');
 
-/**
- * return headers of specific sheet
- *
- * @param filePath
- * @param sheetIndex default to 0
- * @returns {string[]|*[]}
- */
-function headers(filePath, sheetIndex) {
+function rows(filePath, sheetIndex) {
 
     sheetIndex = sheetIndex ? sheetIndex : 0;
 
 //    读取Excel文件
     const workbook = XLSX.readFile(filePath);
-//    获取第一个工作表
+//    获取指定工作表
     const sheet = workbook.Sheets[workbook.SheetNames[sheetIndex]];
 
     const rows = XLSX.utils.sheet_to_json(sheet, {header: 1});
@@ -23,6 +16,25 @@ function headers(filePath, sheetIndex) {
         return [];
     }
 
-    return rows[0];
+    return rows;
 }
+
+/**
+ * return headers of specific sheet
+ *
+ * @param filePath
+ * @param sheetIndex default to 0
+ * @returns {string[]|*[]}
+ */
+function headers(filePath, sheetIndex) {
+    sheetIndex = sheetIndex ? sheetIndex : 0;
+
+    const parsedRows = rows(filePath, sheetIndex);
+    if (_.isEmpty(rows)) {
+        return [];
+    }
+
+    return parsedRows[0];
+}
+
 
