@@ -1,9 +1,9 @@
 const utils = {
-    ...require('./cryptoUtils'),
-    ...require('./dateUtils'),
-    ...require('./fileUtils'),
-    ...require('./randomUtils'),
-    ...require('./timingUtils')
+    ...require('./crypto-util'),
+    ...require('./datetime-util'),
+    ...require('./file-util'),
+    ...require('./random-util'),
+    ...require('./thread-util')
 };
 
 module.exports = utils;
