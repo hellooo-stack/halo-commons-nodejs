@@ -6,7 +6,7 @@
 //
 //// reader.rows()
 //
-//// test('should return rows in the specific sheet', () => {
+//// __tests__('should return rows in the specific sheet', () => {
 ////     const filePath = 'generated.xlsx';
 ////     const sheetIndex = 0;
 ////     const expectedRows = [['col1 of row1', 'col2 of row1'], ['col1 of row2', 'col2 of row2']];
@@ -18,7 +18,7 @@
 //describe('rowsFromExcel', () => {
 //    it('should return the rows from the specified sheet in the Excel file', () => {
 //        // Arrange
-//        const filePath = 'path/to/test/file.xlsx';
+//        const filePath = 'path/to/__tests__/file.xlsx';
 //        const expectedRows = [      ['col1 of row1', 'col2 of row1'],
 //            ['col1 of row2', 'col2 of row2'],
 //        ];
