@@ -4,7 +4,7 @@ const _ = require('lodash');
 /**
  * return rows in the specific sheet, each row will be as an item in the resulting array
  *
- * @param filePath file path of the workbook
+ * @param filePath file path of the Excel workbook
  * @param sheetIndex default to 0
  * @returns {unknown[]|*[]} array containing the rows, each row is an array: [['col1 of row1', 'col2 of row1'], ['col1 of row2', 'col2 of row2']]
  */
@@ -25,11 +25,11 @@ function rowsFromExcel(filePath, sheetIndex = 0) {
 }
 
 /**
- * return headers of specific sheet
+ * return headers of the specific sheet
  *
- * @param filePath file path of the workbook
+ * @param filePath The file path of the Excel workbook.
  * @param sheetIndex default to 0
- * @returns {string[]|*[]} array containing the headers
+ * @returns {string[]|*[]} array containing the headers: ['header1', 'header2', 'header3']
  */
 function headersFromExcel(filePath, sheetIndex = 0) {
 
@@ -41,6 +41,13 @@ function headersFromExcel(filePath, sheetIndex = 0) {
     return parsedRows[0];
 }
 
+/**
+ * Returns the contents(excluding the header row) of the specified sheet in the specified Excel workbook.
+ *
+ * @param filePath The file path of the Excel workbook.
+ * @param sheetIndex The index of the sheet to retrieve the contents from. Defaults to 0, indicating the first sheet.
+ * @returns {*[]|*[]} The contents of the specified sheet, with each row being an element in the array: [['col1 of row1', 'col2 of row1'], ['col1 of row2', 'col2 of row2']]
+ */
 function contentsFromExcel(filePath, sheetIndex = 0) {
 
     const parsedRows = rowsFromExcel(filePath, sheetIndex);
@@ -52,6 +59,15 @@ function contentsFromExcel(filePath, sheetIndex = 0) {
     return _.takeRight(parsedRows, parsedRows.length - 1);
 }
 
+/**
+ * Returns the contents of the specified sheet in the specified Excel workbook in JSON format.
+ *
+ * @param filePath The file path of the Excel workbook.
+ * @param sheetIndex The index of the sheet to retrieve the contents from. Defaults to 0, indicating the first sheet.
+ * @returns {unknown[]|*[]} The contents of the specified sheet in JSON format.
+ *                          The first row is used as the keys, and the rest of the rows are used as the values.
+ *                          If the sheet is empty (no data) or has only one row of data, an empty array is returned.
+ */
 function contentsAsJSONFromExcel(filePath, sheetIndex = 0) {
 
     const workbook = XLSX.readFile(filePath);

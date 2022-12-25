@@ -2,11 +2,13 @@ const XLSX = require('xlsx');
 const _ = require('lodash');
 
 /**
- * Write rows to a new Excel file, If the file already exists, create a new one and replace it
+ * Writes the specified two-dimensional array to a new Excel workbook,
+ * If the file already exists, create a new one and replace it.
  *
- * @param rows array containing the rows, each row is an array: [['col1 of row1', 'col2 of row1'], ['col1 of row2', 'col2 of row2']]
- * @param filePath file path of the workbook
- * @param sheetName name of the sheet, default to Sheet1
+ * @param rows The two-dimensional array to write to the workbook.
+ * @param filePath The file path of the new Excel workbook.
+ * @param sheetName The name of the sheet. Defaults to 'Sheet1'.
+ * @returns {boolean} Returns true if the workbook was successfully written, false otherwise.
  */
 function writeToNewExcel(rows, filePath, sheetName = 'Sheet1') {
 
@@ -33,11 +35,12 @@ function writeToNewExcel(rows, filePath, sheetName = 'Sheet1') {
 }
 
 /**
- * Write rows to a new sheet in an existing Excel file
+ * Adds a new sheet to an existing Excel file and writes the contents of a two-dimensional array to the new sheet.
  *
- * @param rows
- * @param filePath
- * @param sheetName
+ * @param rows A two-dimensional array of any type containing the data to be written to the new sheet.
+ * @param filePath The path to the Excel file to which the new sheet will be added.
+ * @param sheetName The name of the new sheet. Default value is 'NewSheet1'.
+ * @returns {boolean} Indicating whether the write operation was successful. Returns true if The Write was successful, and false otherwise.
  */
 function writeToExcelWithNewSheet(rows, filePath, sheetName = 'NewSheet1') {
 
@@ -69,6 +72,7 @@ function writeToExcelWithNewSheet(rows, filePath, sheetName = 'NewSheet1') {
  * @param rows array containing the rows, each row is an array: [['col1 of row1', 'col2 of row1'], ['col1 of row2', 'col2 of row2']]
  * @param filePath file path of the workbook
  * @param sheetIndex index of the sheet, default to 0
+ * @returns {boolean} true if it was successful, and false otherwise.
  */
 function appendToExcel(rows, filePath, sheetIndex = 0) {
 
@@ -101,6 +105,7 @@ function appendToExcel(rows, filePath, sheetIndex = 0) {
  * @param filePath file path of the workbook
  * @param sheetIndex index of the sheet, default to 0
  * @param rowIndex index of the row to insert the rows, default to 1
+ * @returns {boolean} true if it was successful, and false otherwise.
  */
 function insertIntoExcel(rows, filePath, sheetIndex = 0, rowIndex = 1) {
 
