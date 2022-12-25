@@ -40,7 +40,7 @@ function writeToNewExcel(rows, filePath, sheetName = 'Sheet1') {
  * @param rows A two-dimensional array of any type containing the data to be written to the new sheet.
  * @param filePath The path to the Excel file to which the new sheet will be added.
  * @param sheetName The name of the new sheet. Default value is 'NewSheet1'.
- * @returns {boolean} Indicating whether the write operation was successful. Returns true if The Write was successful, and false otherwise.
+ * @returns {boolean} empty rows or workbook of filePath not exists: false, otherwise and successfully write: true
  */
 function writeToExcelWithNewSheet(rows, filePath, sheetName = 'NewSheet1') {
 
@@ -86,8 +86,16 @@ function appendToExcel(rows, filePath, sheetIndex = 0) {
         const workbook = XLSX.readFile(filePath);
 //        get the sheet from the workbook
         const sheet = workbook.Sheets[workbook.SheetNames[sheetIndex]];
-//        append the rows to the sheet
-        XLSX.utils.sheet_add_aoa(sheet, rows, {origin: -1});
+
+        const sheetData = XLSX.utils.sheet_to_json(sheet, {header: 1})
+        if (sheetData.length === 0) {
+//            if the sheet is empty, we should write data from row_0(default is row_1, which means row_0 is empty)
+            XLSX.utils.sheet_add_aoa(sheet, rows, {origin: 0});
+        } else {
+//            otherwise write data from the lastRow + 1
+            XLSX.utils.sheet_add_aoa(sheet, rows, {origin: -1});
+        }
+
 //        write the workbook to the file
         XLSX.writeFile(workbook, filePath);
 
