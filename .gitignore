@@ -130,3 +130,5 @@ gradle-app.setting
 node_modules
 
 coverage
+
+.DS_Store
