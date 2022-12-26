@@ -2,23 +2,80 @@ const fs = require('fs');
 const path = require('path');
 const os = require('os');
 
-/**
- *
- * @param filePath
- * @param data <string> | <Buffer> https://nodejs.org/dist/latest-v18.x/docs/api/buffer.html#class-buffer
- * @returns {Promise<unknown>}
- */
-function writeFileAsync(filePath, data) {
+function isFileExistsAsync(filePath) {
     return new Promise((resolve, reject) => {
-        fs.writeFile(filePath, data,  err => {
+        fs.access(filePath, fs.constants.F_OK, err => {
             if (err) {
-                reject(err);
+                resolve(false);
             }
 
-            resolve();
-        })
+            resolve(true);
+        });
     });
 }
+
+function isFileReadableAsync(filePath) {
+    return new Promise((resolve, reject) => {
+        fs.access(filePath, fs.constants.R_OK, err => {
+            if (err) {
+                resolve(false);
+            }
+
+            resolve(true);
+        });
+    });
+}
+
+function isFileWritableAsync(filePath) {
+    return new Promise((resolve, reject) => {
+        fs.access(filePath, fs.constants.W_OK, err => {
+            if (err) {
+                resolve(false);
+            }
+
+            resolve(true);
+        });
+    });
+}
+
+function isFileReadableAndWritableAsync(filePath) {
+    return new Promise((resolve, reject) => {
+        fs.access(filePath, fs.constants.R_OK | fs.constants.W_OK, err => {
+            if (err) {
+                resolve(false);
+            }
+
+            resolve(true);
+        });
+    });
+}
+
+function isDirectoryAsync(filePath) {
+    return new Promise((resolve, reject) => {
+        fs.stat(filePath, (err, stats) => {
+            if (err) {
+                resolve(false);
+            }
+
+            resolve(stats.isDirectory());
+        });
+    });
+}
+
+function isFileAsync(filePath) {
+    return new Promise((resolve, reject) => {
+        fs.stat(filePath, (err, stats) => {
+            if (err) {
+                resolve(false);
+            }
+
+            resolve(stats.isFile());
+        });
+    });
+}
+
+
+
 
 /**
  *
@@ -50,6 +107,12 @@ function normalizePath(filePath) {
 function homedirPath() {
     return normalizePath(os.homedir());
 }
+
+
+function currentDirPath() {
+    return path.resolve(__dirname);
+}
+
 
 module.exports = {
     writeFileAsync: writeFileAsync,
