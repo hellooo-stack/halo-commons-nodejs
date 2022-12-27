@@ -1,13 +1,14 @@
 const fs = require('fs');
 const path = require('path');
 const os = require('os');
+const cryptoUtil = require("./crypto-util");
 
 function isFileExists(filePath) {
     try {
         fs.accessSync(filePath, fs.constants.F_OK);
         return true;
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return false;
     }
 }
@@ -29,7 +30,7 @@ function isFileReadable(filePath) {
         fs.accessSync(filePath, fs.constants.R_OK);
         return true;
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return false;
     }
 }
@@ -51,7 +52,7 @@ function isFileWritable(filePath) {
         fs.accessSync(filePath, fs.constants.W_OK);
         return true;
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return false;
     }
 }
@@ -73,7 +74,7 @@ function isFileReadableAndWritable(filePath) {
         fs.accessSync(filePath, fs.constants.R_OK | fs.constants.W_OK);
         return true;
     } catch (err) {
-        console.log(err);
+        console.error(err);
         return false;
     }
 }
@@ -160,6 +161,10 @@ function currentDirPath() {
     return path.resolve(__dirname);
 }
 
+function md5ForFile(filePath) {
+    const content = fs.readFileSync(filePath);
+    return cryptoUtil.md5(content);
+}
 
 module.exports = {
     isFileExists,
@@ -177,5 +182,6 @@ module.exports = {
     systemEOFMarker,
     normalizePath,
     homedirPath,
-    currentDirPath
+    currentDirPath,
+    md5ForFile
 }

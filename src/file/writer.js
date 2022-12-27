@@ -76,6 +76,14 @@ function writeLineToFileAsync(line, filePath, writeIfExists = false) {
     return writeToFileAsync(`${line}\n`, filePath, writeIfExists);
 }
 
+function appendLineToFile(line, filePath, createIfNotExists = true) {
+    return appendToFile(`${line}\n`, filePath, createIfNotExists);
+}
+
+function appendLineToFileAsync(line, filePath, createIfNotExists = true) {
+    return appendToFileAsync(`${line}\n`, filePath, createIfNotExists);
+}
+
 function writeJSONToFile(data, filePath, writeIfExists = false) {
     try {
         const json = JSON.stringify(data);
@@ -128,3 +136,18 @@ function writeJSONToFileAsync(data, filePath, writeIfExists = false) {
 //    endWrite(writeStream);
 //}
 //----------------------------------------------------------------------
+
+const writer = {
+    writeToFile,
+    writeToFileAsync,
+    appendToFile,
+    appendToFileAsync,
+    writeLineToFile,
+    writeLineToFileAsync,
+    appendLineToFile,
+    appendLineToFileAsync,
+    writeJSONToFile,
+    writeJSONToFileAsync
+}
+
+module.exports = writer;
