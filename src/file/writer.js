@@ -3,13 +3,7 @@
  * @date: 2022/12/26 23:00
  */
 const fs = require('fs');
-const path = require('path');
 const fileUtil = require('../utils/file-util');
-
-
-const mypath = path.resolve(__dirname, 'write-to-file.txt');
-const result = writeToFile('hello', mypath);
-console.log('result: ', result);
 
 
 function writeToFile(data, filePath, writeIfExists = false) {
@@ -39,7 +33,7 @@ function writeToFileAsync(data, filePath, writeIfExists = false) {
 
 function appendToFile(data, filePath, createIfNotExists = true) {
     if (!createIfNotExists) {
-        const fileExists = fileUtil.isFileExistsAsync();
+        const fileExists = fileUtil.isFileExists(filePath);
         if (!fileExists) {
             return false;
         }
@@ -55,9 +49,9 @@ function appendToFile(data, filePath, createIfNotExists = true) {
 }
 
 function appendToFileAsync(data, filePath, createIfNotExists = true) {
-    return new Promise((resolve, reject) => {
+    return new Promise(async (resolve, reject) => {
         if (!createIfNotExists) {
-            const fileExists = fileUtil.isFileExistsAsync();
+            const fileExists = await fileUtil.isFileExistsAsync();
             if (!fileExists) {
                 resolve(false);
             }
@@ -82,44 +76,55 @@ function writeLineToFileAsync(line, filePath, writeIfExists = false) {
     return writeToFileAsync(`${line}\n`, filePath, writeIfExists);
 }
 
-function writeJSONToFile(json, filePath) {
-    fs.writeFile(filePath, JSON.stringify(json), (err) => {
-        if (err) {
+function writeJSONToFile(data, filePath, writeIfExists = false) {
+    try {
+        const json = JSON.stringify(data);
+        const writeFlag = writeIfExists ? 'w' : 'wx';
+        fs.writeFileSync(filePath, json, {flag: writeFlag});
+        return true;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
+
+function writeJSONToFileAsync(data, filePath, writeIfExists = false) {
+    return new Promise((resolve, reject) => {
+        try {
+            const json = JSON.stringify(data);
+            const writeFlag = writeIfExists ? 'w' : 'wx';
+            fs.writeFile(filePath, json, {flag: writeFlag}, err => {
+                if (err) {
+                    console.error(err);
+                    resolve(false);
+                }
+
+                resolve(true);
+            });
+        } catch (err) {
             console.error(err);
-        } else {
-            console.log('JSON written to file successfully');
+            resolve(false);
         }
     });
 }
 
-function writeJSONToFileAsync(json, filePath) {
-    return new Promise((resolve, reject) => {
-        fs.writeFile(filePath, JSON.stringify(json), (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
-}
 
-
-function createWriteStream(filePath) {
-    return fs.createWriteStream(filePath);
-}
-
-function writeDataToStream(writeStream, data) {
-    writeStream.write(data);
-}
-
-function endWrite(writeStream) {
-    writeStream.end();
-}
-
-function writeDataToFile(filePath, data) {
-    const writeStream = createWriteStream(filePath);
-    writeDataToStream(writeStream, data);
-    endWrite(writeStream);
-}
-
+//-------------------stream api: not implemented yet-------------------
+//function createWriteStream(filePath) {
+//    return fs.createWriteStream(filePath);
+//}
+//
+//function writeDataToStream(writeStream, data) {
+//    writeStream.write(data);
+//}
+//
+//function endWrite(writeStream) {
+//    writeStream.end();
+//}
+//
+//function writeDataToFile(filePath, data) {
+//    const writeStream = createWriteStream(filePath);
+//    writeDataToStream(writeStream, data);
+//    endWrite(writeStream);
+//}
+//----------------------------------------------------------------------
