@@ -12,6 +12,7 @@ const utils = {
 
 const allInOne = {
     ...excel,
+    ...file,
     ...utils
 };
 
