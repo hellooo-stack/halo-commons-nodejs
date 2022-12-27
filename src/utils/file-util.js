@@ -115,9 +115,13 @@ function currentDirPath() {
 
 
 module.exports = {
-    writeFileAsync: writeFileAsync,
-    appendFileAsync: appendFileAsync,
-    normalizePath: normalizePath,
-    homedirPath: homedirPath
+    isFileExistsAsync,
+    appendFileAsync,
+    normalizePath,
+    homedirPath
 }
+
+//const os = require('os');
+
+console.log(os.EOL);
 

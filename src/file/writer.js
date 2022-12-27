@@ -4,6 +4,7 @@
  */
 const fs = require('fs');
 const path = require('path');
+const fileUtil = require('../utils/file-util');
 
 
 const mypath = path.resolve(__dirname, 'write-to-file.txt');
@@ -22,13 +23,6 @@ function writeToFile(data, filePath, writeIfExists = false) {
     }
 }
 
-/**
- *
- * @param data https://nodejs.org/dist/latest-v18.x/docs/api/buffer.html#class-buffer
- * @param filePath
- * @param writeIfExists
- * @returns {Promise<unknown>}
- */
 function writeToFileAsync(data, filePath, writeIfExists = false) {
     return new Promise((resolve, reject) => {
         const writeFlag = writeIfExists ? 'w' : 'wx';
@@ -43,48 +37,49 @@ function writeToFileAsync(data, filePath, writeIfExists = false) {
     });
 }
 
-function appendToFile(data, filePath) {
-    fs.appendFile(filePath, data, (err) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log('Data appended to file successfully');
+function appendToFile(data, filePath, createIfNotExists = true) {
+    if (!createIfNotExists) {
+        const fileExists = fileUtil.isFileExistsAsync();
+        if (!fileExists) {
+            return false;
         }
-    });
+    }
+
+    try {
+        fs.appendFileSync(filePath, data, {flag: 'a'});
+        return true;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
 }
 
-function appendToFileAsync(data, filePath) {
+function appendToFileAsync(data, filePath, createIfNotExists = true) {
     return new Promise((resolve, reject) => {
+        if (!createIfNotExists) {
+            const fileExists = fileUtil.isFileExistsAsync();
+            if (!fileExists) {
+                resolve(false);
+            }
+        }
+
         fs.appendFile(filePath, data, (err) => {
             if (err) {
-                reject(err);
+                console.error(err);
+                resolve(false);
             } else {
-                resolve();
+                resolve(true);
             }
         });
     });
 }
 
-function writeLineToFile(line, filePath) {
-    fs.appendFile(filePath, `${line}\n`, (err) => {
-        if (err) {
-            console.error(err);
-        } else {
-            console.log('Line written to file successfully');
-        }
-    });
+function writeLineToFile(line, filePath, writeIfExists = false) {
+    return writeToFile(`${line}\n`, filePath, writeIfExists);
 }
 
-function writeLineToFileAsync(line, filePath) {
-    return new Promise((resolve, reject) => {
-        fs.appendFile(filePath, `${line}\n`, (err) => {
-            if (err) {
-                reject(err);
-            } else {
-                resolve();
-            }
-        });
-    });
+function writeLineToFileAsync(line, filePath, writeIfExists = false) {
+    return writeToFileAsync(`${line}\n`, filePath, writeIfExists);
 }
 
 function writeJSONToFile(json, filePath) {
