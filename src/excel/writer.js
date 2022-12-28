@@ -139,12 +139,31 @@ function insertIntoExcel(rows, filePath, sheetIndex = 0, rowIndex = 1) {
     }
 }
 
+function writeJSONToNewExcel(rowsWithJSONFormat, filePath, sheetName = 'Sheet1') {
+    if (!_.isArray(rowsWithJSONFormat) || _.every(rowsWithJSONFormat, _.isEmpty)) {
+        return false;
+    }
+
+    try {
+        const workbook = XLSX.utils.book_new();
+        const sheet = XLSX.utils.json_to_sheet(rowsWithJSONFormat);
+        XLSX.utils.book_append_sheet(workbook, sheet, sheetName);
+        XLSX.writeFile(workbook, filePath);
+
+        return true;
+    } catch (err) {
+        console.error(err);
+        return false;
+    }
+}
+
 
 const writer = {
     writeToNewExcel,
     writeToExcelWithNewSheet,
     appendToExcel,
-    insertIntoExcel
+    insertIntoExcel,
+    writeJSONToNewExcel
 }
 
 module.exports = writer;
