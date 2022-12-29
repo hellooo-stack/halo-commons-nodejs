@@ -24,6 +24,8 @@
     "mongodb": "^4.13.0",
     "mysql": "^2.18.1",
     "redis": "^4.5.1",
+    "request": "^2.88.2",
+    "user-agents": "^1.0.1243",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {
