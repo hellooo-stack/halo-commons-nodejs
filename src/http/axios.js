@@ -4,6 +4,9 @@
  */
 const axios = require('axios');
 const cookie = require('cookie');
+const _ = require('lodash');
+const httpUtil = require('../utils/http-util');
+const stringUtil = require('../utils/string-util');
 
 function request(config) {
     return axios.request(config);
@@ -37,7 +40,13 @@ function getWithHeader(url, headers = {}, params = {}) {
 }
 
 function getWithCookie(url, cookies = {}, params = {}) {
+    const cookie = httpUtil.serializeCookiesToString(cookies);
+    let headers = {};
+    if (stringUtil.isNotBlank(cookie)) {
+        headers['Cookie'] = cookie;
+    }
 
+    return getWithHeader(url, headers, params);
 }
 
 function getWithProxy(url, proxy, params = {}) {
@@ -55,19 +64,45 @@ function getWithProxy(url, proxy, params = {}) {
 }
 
 function post(url, data) {
-
+    if (this instanceof AxiosRequest) {
+        return this.instance.post(url, data);
+    } else {
+        return axios.post(url, data);
+    }
 }
 
 function postWithHeader(url, data, headers) {
-
+    if (this instanceof AxiosRequest) {
+        return this.instance.post(url, data, {
+            headers: headers
+        });
+    } else {
+        return axios.post(url, data, {
+            headers: headers
+        });
+    }
 }
 
 function postWithCookie(url, data, cookies) {
+    const cookie = httpUtil.serializeCookiesToString(cookies);
+    let headers = {};
+    if (stringUtil.isNotBlank(cookie)) {
+        headers['Cookie'] = cookie;
+    }
 
+    return postWithHeader(url, data, headers);
 }
 
 function postWithProxy(url, data, proxy) {
-
+    if (this instanceof AxiosRequest) {
+        return this.instance.post(url, data, {
+            proxy: proxy
+        });
+    } else {
+        return axios.post(url, data, {
+            proxy: proxy
+        });
+    }
 }
 
 // todo
@@ -75,6 +110,8 @@ function postWithProxy(url, data, proxy) {
 function getAndPipeTo(url, filePath, config) {
 
 }
+
+
 
 function createAxiosRequest(baseURL = '', config = {}) {
     if (config.baseURL) {
@@ -107,28 +144,17 @@ AxiosRequest.prototype.postWithProxy = postWithProxy;
 AxiosRequest.prototype.getAndPipeTo = getAndPipeTo;
 
 
-//module.exports = {
-//    request,
-//    get,
-//    getWithHeader,
-//    getWithCookie,
-//    getWithProxy,
-//    post,
-//    postWithHeader,
-//    postWithCookie,
-//    postWithProxy,
-//    getAndPipeTo,
-//    createAxiosRequest
-//}
+module.exports = {
+    request,
+    get,
+    getWithHeader,
+    getWithCookie,
+    getWithProxy,
+    post,
+    postWithHeader,
+    postWithCookie,
+    postWithProxy,
+    getAndPipeTo,
+    createAxiosRequest
+}
 
-//(async () => {
-//    const result = await get('https://www.baidu.com');
-////    console.log('result: ', result);
-////
-//    const axiosRequest = createAxiosRequest('http://localhost:8381');
-//    const result1 = await axiosRequest.get('/members/api/member/');
-//    console.log('result1: ', result1);
-//})();
-
-const setCookie = cookie.serialize('1','2','3','5');
-console.log(setCookie);
