@@ -6,6 +6,10 @@ const file = {
     ...require('./file')
 };
 
+const http = {
+    ...require('./http')
+};
+
 const utils = {
     ...require('./utils')
 };
@@ -13,12 +17,14 @@ const utils = {
 const allInOne = {
     ...excel,
     ...file,
+//    ...http,
     ...utils
 };
 
 const hellooo_commons = {
     excel,
     file,
+    http,
     utils,
     ...allInOne
 };
