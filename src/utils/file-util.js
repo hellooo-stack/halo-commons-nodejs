@@ -166,6 +166,22 @@ function md5ForFile(filePath) {
     return cryptoUtil.md5(content);
 }
 
+function createReadStream(filePath, options) {
+    return fs.createReadStream(filePath, options)
+}
+
+function createWriteStream(filePath, options) {
+    return fs.createWriteStream(filePath, options);
+}
+
+function createWriteStreamIfNotExists(filePath) {
+//    flags: https://nodejs.org/api/fs.html#file-system-flags
+    return fs.createWriteStream(filePath, {
+        flags: 'wx'
+    });
+}
+
+
 module.exports = {
     isFileExists,
     isFileExistsAsync,
@@ -183,5 +199,8 @@ module.exports = {
     normalizePath,
     homedirPath,
     currentDirPath,
-    md5ForFile
+    md5ForFile,
+    createReadStream,
+    createWriteStream,
+    createWriteStreamIfNotExists
 }
