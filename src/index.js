@@ -22,9 +22,9 @@ const allInOne = {
 };
 
 const hellooo_commons = {
-    excel,
-    file,
-    http,
+    excelHelper: excel,
+    fileHelper: file,
+    httpRequest: http,
     utils,
     ...allInOne
 };
