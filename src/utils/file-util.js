@@ -181,6 +181,14 @@ function createWriteStreamIfNotExists(filePath) {
     });
 }
 
+const stream = createWriteStream(path.resolve(__dirname, './hello2.world'));
+stream.on('finish', () => {
+    console.log('on finish');
+});
+stream.on('close', () => {
+    console.log('on close');
+});
+
 
 module.exports = {
     isFileExists,

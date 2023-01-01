@@ -3,8 +3,7 @@
  * @date: 2022/12/22 19:20
  */
 const axios = require('axios');
-const cookie = require('cookie');
-const _ = require('lodash');
+const fileUtil = require('../utils/file-util');
 const httpUtil = require('../utils/http-util');
 const stringUtil = require('../utils/string-util');
 
@@ -107,8 +106,48 @@ function postWithProxy(url, data, proxy) {
 
 // todo
 // https://stackoverflow.com/questions/55374755/node-js-axios-download-file-stream-and-writefile
-function getAndPipeTo(url, filePath, config) {
+function downloadAndPipeTo(url, filePath, config = {overwrite: false}) {
+    return new Promise(async resolve => {
+        const overwrite = config.overwrite;
+        if (!overwrite && await fileUtil.isFileExistsAsync(filePath)) {
+            return resolve(false);
+        }
+        delete config.overwrite;
 
+        let request;
+        if (this instanceof AxiosRequest) {
+            request = this.instance;
+        } else {
+            request = axios;
+        }
+
+        try {
+            delete config.responseType;
+            const response = await request.get(url, {
+                responseType: 'stream',
+                ...config
+            });
+
+            const writeStream = overwrite ? fileUtil.createWriteStream(filePath) : fileUtil.createWriteStreamIfNotExists(filePath);
+            response.data.pipe(writeStream);
+            response.data.on('end', () => {
+//                console.log('download success');
+                resolve(true);
+            });
+
+            response.data.on('error', err => {
+                console.error(err);
+                resolve(false);
+            });
+
+//            for debug
+//            response.data.on('data', chunk => {
+//                console.log('chunk read: ', chunk);
+//            });
+        } catch (err) {
+            resolve(false);
+        }
+    });
 }
 
 
@@ -129,6 +168,7 @@ function createAxiosRequest(baseURL = '', config = {}) {
 
     return new AxiosRequest(config);
 }
+
 function AxiosRequest(config) {
     this.instance = axios.create(config);
 }
@@ -141,7 +181,7 @@ AxiosRequest.prototype.post = post;
 AxiosRequest.prototype.postWithHeader = postWithHeader
 AxiosRequest.prototype.postWithCookie = postWithCookie;
 AxiosRequest.prototype.postWithProxy = postWithProxy;
-AxiosRequest.prototype.getAndPipeTo = getAndPipeTo;
+AxiosRequest.prototype.downloadAndPipeTo = downloadAndPipeTo;
 
 
 module.exports = {
@@ -154,7 +194,7 @@ module.exports = {
     postWithHeader,
     postWithCookie,
     postWithProxy,
-    getAndPipeTo,
+    downloadAndPipeTo,
     createAxiosRequest
 }
 
