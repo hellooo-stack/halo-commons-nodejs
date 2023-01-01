@@ -104,8 +104,6 @@ function postWithProxy(url, data, proxy) {
     }
 }
 
-// todo
-// https://stackoverflow.com/questions/55374755/node-js-axios-download-file-stream-and-writefile
 function downloadAndPipeTo(url, filePath, config = {overwrite: false}) {
     return new Promise(async resolve => {
         const overwrite = config.overwrite;
