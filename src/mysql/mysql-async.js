@@ -36,8 +36,6 @@ function ConnectionPool(config) {
     this.pool = pool;
 
     this.endPoolAsync = promisify(pool.end).bind(pool)
-
-    return pool;
 }
 
 ConnectionPool.prototype.getConnectionAsync = function () {
