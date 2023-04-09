@@ -18,7 +18,7 @@ npm i @hellooo-stack/hellooo-commons
 ```
 
 ## Features
-You can find full examples in the 'examples' directory.
+You can find full examples in the 'doc/examples' directory.
 And here are some of the key features and example code for using this library:
 
 ### Excel
