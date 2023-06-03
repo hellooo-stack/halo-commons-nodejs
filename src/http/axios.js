@@ -11,16 +11,12 @@ function request(config) {
     return axios.request(config);
 }
 
-function get(url, params = {}) {
+function get(url, config = {}) {
 
     if (this instanceof AxiosRequest) {
-        return this.instance.get(url, {
-            params: params
-        });
+        return this.instance.get(url, config);
     } else {
-        return axios.get(url, {
-            params: params
-        });
+        return axios.get(url, config);
     }
 }
 
@@ -62,11 +58,11 @@ function getWithProxy(url, proxy, params = {}) {
     }
 }
 
-function post(url, data) {
+function post(url, data, config = {}) {
     if (this instanceof AxiosRequest) {
-        return this.instance.post(url, data);
+        return this.instance.post(url, data, config);
     } else {
-        return axios.post(url, data);
+        return axios.post(url, data, config);
     }
 }
 
@@ -143,6 +139,7 @@ function downloadAndPipeTo(url, filePath, config = {overwrite: false}) {
 //                console.log('chunk read: ', chunk);
 //            });
         } catch (err) {
+            console.error(err);
             resolve(false);
         }
     });
