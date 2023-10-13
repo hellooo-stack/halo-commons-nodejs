@@ -13,7 +13,7 @@ function readFromFile(filePath) {
     }
 
 //    If the encoding option is specified then this function returns a string.
-//    Otherwise it returns a buffer
+//    Otherwise, it returns a buffer
     return fs.readFileSync(filePath, {encoding: 'utf-8'});
 }
 

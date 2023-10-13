@@ -1,5 +1,5 @@
 {
-  "name": "@hellooo-stack/hellooo-commons",
+  "name": "@hellooo-stack/halo-commons",
   "version": "1.7.3",
   "description": "common nodejs codes for hellooo-stack",
   "main": "src/index.js",
@@ -8,14 +8,14 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/hellooo-stack/hellooo-commons-nodejs.git"
+    "url": "git+https://github.com/hellooo-stack/halo-commons-nodejs.git"
   },
   "author": "https://github.com/Alpha2J",
   "license": "ISC",
   "bugs": {
-    "url": "https://github.com/hellooo-stack/hellooo-commons-nodejs/issues"
+    "url": "https://github.com/hellooo-stack/halo-commons-nodejs/issues"
   },
-  "homepage": "https://github.com/hellooo-stack/hellooo-commons-nodejs#readme",
+  "homepage": "https://github.com/hellooo-stack/halo-commons-nodejs#readme",
   "dependencies": {
     "axios": "^1.2.1",
     "cookie": "^0.5.0",
