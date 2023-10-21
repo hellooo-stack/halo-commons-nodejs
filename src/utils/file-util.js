@@ -18,9 +18,9 @@ function isFileExistsAsync(filePath) {
         fs.access(filePath, fs.constants.F_OK, err => {
             if (err) {
                 resolve(false);
+            } else {
+                resolve(true);
             }
-
-            resolve(true);
         });
     });
 }
@@ -40,9 +40,9 @@ function isFileReadableAsync(filePath) {
         fs.access(filePath, fs.constants.R_OK, err => {
             if (err) {
                 resolve(false);
+            } else {
+                resolve(true);
             }
-
-            resolve(true);
         });
     });
 }
@@ -62,9 +62,9 @@ function isFileWritableAsync(filePath) {
         fs.access(filePath, fs.constants.W_OK, err => {
             if (err) {
                 resolve(false);
+            } else {
+                resolve(true);
             }
-
-            resolve(true);
         });
     });
 }
@@ -84,9 +84,9 @@ function isFileReadableAndWritableAsync(filePath) {
         fs.access(filePath, fs.constants.R_OK | fs.constants.W_OK, err => {
             if (err) {
                 resolve(false);
+            } else {
+                resolve(true);
             }
-
-            resolve(true);
         });
     });
 }
@@ -106,9 +106,9 @@ function isDirectoryAsync(filePath) {
         fs.stat(filePath, (err, stats) => {
             if (err) {
                 resolve(false);
+            } else {
+                resolve(stats.isDirectory());
             }
-
-            resolve(stats.isDirectory());
         });
     });
 }
@@ -128,9 +128,9 @@ function isFileAsync(filePath) {
         fs.stat(filePath, (err, stats) => {
             if (err) {
                 resolve(false);
+            } else {
+                resolve(stats.isFile());
             }
-
-            resolve(stats.isFile());
         });
     });
 }

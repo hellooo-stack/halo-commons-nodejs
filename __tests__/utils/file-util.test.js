@@ -13,9 +13,9 @@ function writeFileAsync(filePath, data) {
         fs.writeFile(filePath, data,  err => {
             if (err) {
                 reject(err);
+            } else {
+                resolve();
             }
-
-            resolve();
         })
     });
 }
@@ -31,10 +31,10 @@ function appendFileAsync(filePath, data) {
         fs.appendFile(filePath, data, err => {
             if (err) {
                 reject(err);
+            } else {
+                resolve();
             }
-
-            resolve();
-        })
+        });
     })
 }
 

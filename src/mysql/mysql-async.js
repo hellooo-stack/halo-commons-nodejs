@@ -42,7 +42,7 @@ ConnectionPool.prototype.getConnectionAsync = function () {
     return new Promise((resolve, reject) => {
         this.pool.getConnection((err, connection) => {
             if (err) {
-                reject(err);
+                return reject(err);
             }
 
             const promisifyConnection = {
