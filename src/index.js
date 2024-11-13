@@ -21,7 +21,7 @@ const utils = {
 const allInOne = {
     ...excel,
     ...file,
-//    ...http,
+    ...http,
     ...mysql,
     ...utils
 };
